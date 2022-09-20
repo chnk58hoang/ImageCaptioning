@@ -27,7 +27,7 @@ class TrainModule(pl.LightningModule):
         return self.model(image, caption)
 
     def configure_optimizers(self):
-        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=1e-4)
+        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=1e-3)
         self.scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='min', factor=0.5, patience=2)
         # return {'optimizer':self.optimizer,'sheduler':self.scheduler,'metric':"val_loss"}
 
@@ -109,6 +109,5 @@ if __name__ == '__main__':
     train_module = TrainModule(model=model, device=device, train_loader=train_dataloader, valid_loader=val_dataloader,
                                vocab_size=200)
     callbacks = MyCallbacks(test_dataset=test_dataset, vocab_model=sp)
-    trainer = Trainer(max_epochs=args.epochs, callbacks=[callbacks, ], )
-    # accelerator='gpu', gpus=1)
+    trainer = Trainer(max_epochs=args.epochs, callbacks=[callbacks, ], accelerator='gpu', gpus=1)
     trainer.fit(train_module)

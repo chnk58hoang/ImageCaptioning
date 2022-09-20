@@ -6,6 +6,7 @@ from dataset.dataset import collate_fn
 def calculate_blue(pred, cap):
     pass
 
+
 def visualizeimage():
     pass
 
@@ -31,6 +32,11 @@ class MyCallbacks(pl.Callback):
             pred_caption = self.vocab_model.decode_ids(pred_caption)
 
             caption = self.vocab_model.decode_ids(caption)
-            print("Prediction:{}".format(pred_caption))
-            print("Label: {}".format(caption))
+
+            all_preds.append(pred_caption)
+            all_caps.append(caption[0])
+
+        for i in range(len(all_preds)):
+            print("Prediction:{}".format(all_preds[i]))
+            print("Label: {}".format(all_caps[i]))
             print('\n')
