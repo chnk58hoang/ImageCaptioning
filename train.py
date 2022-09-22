@@ -65,7 +65,7 @@ class TrainModule(pl.LightningModule):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--img', type=str, default='archive/images')
-    parser.add_argument('--vocab', type=str, default='vocab/m.model')
+    parser.add_argument('--vocab', type=str, default='m.model')
     parser.add_argument('--epochs', type=int, default=100)
     parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--ft', type=bool, default=False)
@@ -109,5 +109,5 @@ if __name__ == '__main__':
     train_module = TrainModule(model=model, device=device, train_loader=train_dataloader, valid_loader=val_dataloader,
                                vocab_size=200)
     callbacks = MyCallbacks(test_dataset=test_dataset, vocab_model=sp)
-    trainer = Trainer(max_epochs=args.epochs, callbacks=[callbacks, ], accelerator='gpu', gpus=1)
+    trainer = Trainer(max_epochs=args.epochs, callbacks=[callbacks, ],) #accelerator='gpu', gpus=1)
     trainer.fit(train_module)

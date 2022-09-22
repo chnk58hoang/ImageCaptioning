@@ -36,7 +36,7 @@ class MyCallbacks(pl.Callback):
         for batch_idx, data in enumerate(dataloader):
             image = data[0]
             caption = data[1].tolist()
-            visualize(image)
+            visualize(image[0])
 
             pred_caption = pl_module.predict(image)
             pred_caption = self.vocab_model.decode_ids(pred_caption)
