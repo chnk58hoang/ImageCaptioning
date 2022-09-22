@@ -64,8 +64,8 @@ class TrainModule(pl.LightningModule):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--img', type=str, default='archive/Images')
-    parser.add_argument('--vocab', type=str, default='vocab/model.model')
+    parser.add_argument('--img', type=str, default='archive/images')
+    parser.add_argument('--vocab', type=str, default='vocab/m.model')
     parser.add_argument('--epochs', type=int, default=100)
     parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--ft', type=bool, default=False)
@@ -88,7 +88,7 @@ if __name__ == '__main__':
 
     """Vocab_model"""
     sp = spm.SentencePieceProcessor()
-    sp.load('m.model')
+    sp.load(args.vocab)
 
     """Create dataset and dataloader"""
 

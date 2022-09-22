@@ -1,14 +1,23 @@
 import pytorch_lightning as pl
 from torch.utils.data import RandomSampler, DataLoader
 from dataset.dataset import collate_fn
+import matplotlib.pyplot as plt
 
 
-def calculate_blue(pred, cap):
-    pass
+def visualize(img, title=None):
+    img[0] = img[0] * 0.229
+    img[1] = img[1] * 0.224
+    img[2] = img[2] * 0.225
+    img[0] += 0.485
+    img[1] += 0.456
+    img[2] += 0.406
 
+    img = img.numpy().transpose((1, 2, 0))
 
-def visualizeimage():
-    pass
+    plt.imshow(img)
+    if title is not None:
+        plt.title(title)
+    plt.pause(0.001)  # pause a bit so that plots are updated
 
 
 class MyCallbacks(pl.Callback):
@@ -27,6 +36,7 @@ class MyCallbacks(pl.Callback):
         for batch_idx, data in enumerate(dataloader):
             image = data[0]
             caption = data[1].tolist()
+            visualize(image)
 
             pred_caption = pl_module.predict(image)
             pred_caption = self.vocab_model.decode_ids(pred_caption)
@@ -39,4 +49,4 @@ class MyCallbacks(pl.Callback):
         for i in range(len(all_preds)):
             print("Prediction:{}".format(all_preds[i]))
             print("Label: {}".format(all_caps[i]))
-            print('\n')
+
