@@ -109,5 +109,5 @@ if __name__ == '__main__':
     train_module = TrainModule(model=model, device=device, train_loader=train_dataloader, valid_loader=val_dataloader,
                                vocab_size=200)
     callbacks = MyCallbacks(test_dataset=test_dataset, vocab_model=sp)
-    trainer = Trainer(max_epochs=args.epochs, callbacks=[callbacks, ],) #accelerator='gpu', gpus=1)
+    trainer = Trainer(max_epochs=args.epochs, callbacks=[callbacks, ],accelerator='gpu', gpus=1)
     trainer.fit(train_module)
